@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Druck im Teilchenmodell - Interaktive Übungen</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- MathJax für Formeln -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Canvas Confetti für Erfolgsmeldungen -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* Verhindert Scrollbalken-Sprünge beim Validieren */
+        body { overflow-y: scroll; }
+        .input-transition { transition: all 0.3s ease; }
+        select { text-align-last: center; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans pb-20">
+
+    <!-- Header / Einführung -->
+    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white p-6 md:p-10 rounded-b-3xl shadow-lg mb-8 max-w-5xl mx-auto">
+        <h1 class="text-3xl md:text-5xl font-bold mb-4">Druck im Teilchenmodell</h1>
+        <div class="bg-white/20 p-4 rounded-xl backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-bold mb-2 flex items-center gap-2">
+                <span>👨‍🏫</span> Dein Vorwissen
+            </h2>
+            <p class="text-lg leading-relaxed">
+                Der Druck $p$ entspricht im Teilchenmodell der <strong>"Gepresstheit"</strong> eines Gases. 
+                Er hängt davon ab, wie viele Teilchen ($N$) sich in einem Volumen ($V$) befinden und wie stark/häufig diese aufgrund ihrer Temperatur ($T$) gegen die Wände stoßen.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4">
+
+        <!-- Simulation Section -->
+        <section class="bg-white p-6 rounded-2xl shadow-md border border-slate-200 mb-10">
+            <h2 class="text-2xl font-bold mb-4 text-blue-900 border-b-2 border-blue-100 pb-2">1. Interaktives Experiment</h2>
+            <p class="mb-4 text-slate-600">Probiere vor den Aufgaben aus, wie sich die Variablen gegenseitig beeinflussen. Beobachte die Teilchen und den Druckmesser!</p>
+            
+            <div class="flex flex-col md:flex-row gap-6">
+                <!-- Canvas Container -->
+                <div class="flex-1 relative border-4 border-slate-300 bg-slate-100 rounded-xl overflow-hidden h-64 md:h-80 shadow-inner">
+                    <canvas id="simCanvas" class="w-full h-full block"></canvas>
+                </div>
+                
+                <!-- Controls -->
+                <div class="w-full md:w-72 flex flex-col gap-5 bg-slate-50 p-5 rounded-xl border border-slate-200">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1 flex justify-between">
+                            <span>Temperatur ($T$)</span> <span id="valT" class="text-blue-600">Mittel</span>
+                        </label>
+                        <input type="range" id="simT" min="1" max="10" value="5" class="w-full accent-blue-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1 flex justify-between">
+                            <span>Volumen ($V$)</span> <span id="valV" class="text-blue-600">100%</span>
+                        </label>
+                        <input type="range" id="simV" min="40" max="100" value="100" class="w-full accent-blue-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1 flex justify-between">
+                            <span>Teilchenzahl ($N$)</span> <span id="valN" class="text-blue-600">100</span>
+                        </label>
+                        <input type="range" id="simN" min="20" max="250" value="100" class="w-full accent-blue-600">
+                    </div>
+                    <div class="mt-auto bg-blue-100 p-4 rounded-lg text-center shadow-inner border border-blue-200">
+                        <span class="block text-xs font-bold text-blue-800 uppercase tracking-wider mb-1">Druck ($p$)</span>
+                        <span id="simP" class="text-3xl font-mono text-blue-900 font-bold drop-shadow-sm">0.0</span>
+                        <span class="text-blue-800 font-bold"> bar</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Anweisungen -->
+        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-xl mb-8 text-indigo-900 shadow-sm">
+            <h3 class="font-bold mb-2">So bearbeitest du die folgenden Aufgaben:</h3>
+            <ul class="list-disc list-inside space-y-1 ml-2 text-sm md:text-base">
+                <li>Wähle für jede Variable ($N, V, T, p$) aus dem Dropdown-Menü, ob sie <strong>steigt</strong>, <strong>sinkt</strong> oder <strong>konstant bleibt</strong>.</li>
+                <li>Erkläre den Effekt in eigenen Worten. Nutze Begriffe aus dem Teilchenmodell (z.B. Geschwindigkeit, Stöße, Wand).</li>
+                <li>Tippe auf "Antworten prüfen", um kleinschrittiges Feedback zu erhalten.</li>
+            </ul>
+        </div>
+
+        <!-- Task A -->
+        <section class="bg-white p-6 md:p-8 rounded-2xl shadow-md border-t-4 border-blue-500 mb-8 relative overflow-hidden group">
+            <h3 class="text-xl font-bold mb-2 text-slate-800">Aufgabe a)</h3>
+            <p class="text-lg mb-6 text-slate-700 font-medium">Ein Fahrradreifen droht in der Sonne zu platzen.</p>
+            
+            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6">
+                <h4 class="font-bold mb-4 text-slate-700">1. Zustandsänderung der Variablen:</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Teilchen ($N$)</label>
+                        <select id="N-a" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="N-a-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Volumen ($V$)</label>
+                        <select id="V-a" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="V-a-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Temperatur ($T$)</label>
+                        <select id="T-a" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="T-a-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Druck ($p$)</label>
+                        <select id="p-a" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="p-a-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h4 class="font-bold mb-2 text-slate-700">2. Begründung im Teilchenmodell:</h4>
+                <textarea id="text-a" rows="3" class="input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-slate-700" placeholder="Durch die Temperaturerhöhung..."></textarea>
+                <div id="text-a-errors" class="flex flex-col gap-1 mt-2"></div>
+            </div>
+
+            <button onclick="checkA()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform active:scale-95 shadow-md flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                Antwort prüfen
+            </button>
+        </section>
+
+        <!-- Task B -->
+        <section class="bg-white p-6 md:p-8 rounded-2xl shadow-md border-t-4 border-emerald-500 mb-8 relative overflow-hidden group">
+            <h3 class="text-xl font-bold mb-2 text-slate-800">Aufgabe b)</h3>
+            <p class="text-lg mb-6 text-slate-700 font-medium">Nach einer schnellen Autofahrt ist der Luftdruck im Reifen bis zu $0{,}2\,\text{bar}$ höher als vorher.</p>
+            
+            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6">
+                <h4 class="font-bold mb-4 text-slate-700">1. Zustandsänderung der Variablen:</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Teilchen ($N$)</label>
+                        <select id="N-b" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="N-b-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Volumen ($V$)</label>
+                        <select id="V-b" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="V-b-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Temperatur ($T$)</label>
+                        <select id="T-b" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="T-b-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Druck ($p$)</label>
+                        <select id="p-b" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="p-b-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h4 class="font-bold mb-2 text-slate-700">2. Begründung im Teilchenmodell:</h4>
+                <textarea id="text-b" rows="3" class="input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-slate-700" placeholder="Durch die Reibung der Reifen auf der Straße..."></textarea>
+                <div id="text-b-errors" class="flex flex-col gap-1 mt-2"></div>
+            </div>
+
+            <button onclick="checkB()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform active:scale-95 shadow-md flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                Antwort prüfen
+            </button>
+        </section>
+
+        <!-- Task C -->
+        <section class="bg-white p-6 md:p-8 rounded-2xl shadow-md border-t-4 border-amber-500 mb-8 relative overflow-hidden group">
+            <h3 class="text-xl font-bold mb-2 text-slate-800">Aufgabe c)</h3>
+            <p class="text-lg mb-6 text-slate-700 font-medium">Der Deckel auf einem Marmeladenglas sitzt sehr fest, wenn man die frisch gekochte Marmelade heiß ins Glas füllt und dann sofort verschließt.</p>
+            
+            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6">
+                <h4 class="font-bold mb-4 text-slate-700">1. Zustandsänderung der Variablen:</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Teilchen ($N$)</label>
+                        <select id="N-c" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="N-c-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Volumen ($V$)</label>
+                        <select id="V-c" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="V-c-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Temperatur ($T$)</label>
+                        <select id="T-c" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="T-c-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Druck ($p$)</label>
+                        <select id="p-c" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="p-c-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h4 class="font-bold mb-2 text-slate-700">2. Begründung im Teilchenmodell:</h4>
+                <textarea id="text-c" rows="3" class="input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-200 text-slate-700" placeholder="Wenn die Marmelade abkühlt..."></textarea>
+                <div id="text-c-errors" class="flex flex-col gap-1 mt-2"></div>
+            </div>
+
+            <button onclick="checkC()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-lg transition-all transform active:scale-95 shadow-md flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                Antwort prüfen
+            </button>
+        </section>
+
+        <!-- Task D -->
+        <section class="bg-white p-6 md:p-8 rounded-2xl shadow-md border-t-4 border-purple-500 mb-8 relative overflow-hidden group">
+            <h3 class="text-xl font-bold mb-2 text-slate-800">Aufgabe d)</h3>
+            <p class="text-lg mb-6 text-slate-700 font-medium">Ein im Sommer hart aufgepumpter Fußball fühlt sich im Winter weich an.</p>
+            
+            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6">
+                <h4 class="font-bold mb-4 text-slate-700">1. Zustandsänderung der Variablen:</h4>
+                <p class="text-xs text-slate-500 mb-4 italic">Hinweis: Gehe vereinfacht davon aus, dass das Volumen ($V$) des Balls durch die feste Hülle näherungsweise gleich bleibt.</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Teilchen ($N$)</label>
+                        <select id="N-d" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="N-d-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Volumen ($V$)</label>
+                        <select id="V-d" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="V-d-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Temperatur ($T$)</label>
+                        <select id="T-d" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="T-d-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="block font-bold text-slate-600 mb-2 text-center">Druck ($p$)</label>
+                        <select id="p-d" class="input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 bg-white cursor-pointer">
+                            <option value="" disabled selected>-</option><option value="steigt">steigt</option><option value="sinkt">sinkt</option><option value="konstant">konstant</option>
+                        </select>
+                        <div id="p-d-hint" class="text-center min-h-[24px] mt-1 text-xs"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h4 class="font-bold mb-2 text-slate-700">2. Begründung im Teilchenmodell:</h4>
+                <textarea id="text-d" rows="3" class="input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 text-slate-700" placeholder="Im Winter ist die Temperatur niedriger, dadurch..."></textarea>
+                <div id="text-d-errors" class="flex flex-col gap-1 mt-2"></div>
+            </div>
+
+            <button onclick="checkD()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform active:scale-95 shadow-md flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                Antwort prüfen
+            </button>
+        </section>
+
+    </main>
+
+    <script>
+        // --- 1. SIMULATION LOGIC ---
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let pressureHistory = [];
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        class SimParticle {
+            constructor(boxW, boxH) {
+                this.radius = 4;
+                this.x = Math.random() * (boxW - 2*this.radius) + this.radius;
+                this.y = Math.random() * (boxH - 2*this.radius) + this.radius;
+                let angle = Math.random() * 2 * Math.PI;
+                this.baseVx = Math.cos(angle);
+                this.baseVy = Math.sin(angle);
+            }
+            update(boxW, boxH, tempScale) {
+                // Temperatur skaliert die Geschwindigkeit
+                let speed = Math.sqrt(tempScale) * 1.5; 
+                let vx = this.baseVx * speed;
+                let vy = this.baseVy * speed;
+
+                this.x += vx;
+                this.y += vy;
+                let hit = 0;
+
+                // Kollisionen mit den Wänden (Impulsübertrag)
+                if (this.x < this.radius) {
+                    this.x = this.radius;
+                    this.baseVx *= -1;
+                    hit += Math.abs(vx);
+                } else if (this.x > boxW - this.radius) {
+                    this.x = boxW - this.radius;
+                    this.baseVx *= -1;
+                    hit += Math.abs(vx);
+                }
+
+                if (this.y < this.radius) {
+                    this.y = this.radius;
+                    this.baseVy *= -1;
+                    hit += Math.abs(vy);
+                } else if (this.y > boxH - this.radius) {
+                    this.y = boxH - this.radius;
+                    this.baseVy *= -1;
+                    hit += Math.abs(vy);
+                }
+                return hit;
+            }
+            draw(ctx) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+
+        function initSim() {
+            resizeCanvas();
+            particles = [];
+            loop();
+        }
+
+        function loop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Regler-Werte auslesen
+            let T = parseFloat(document.getElementById('simT').value);
+            let V_percent = parseFloat(document.getElementById('simV').value) / 100;
+            let N = parseInt(document.getElementById('simN').value);
+            
+            // Labels updaten
+            document.getElementById('valT').innerText = T < 4 ? 'Kalt' : (T > 7 ? 'Heiß' : 'Mittel');
+            document.getElementById('valV').innerText = Math.round(V_percent * 100) + '%';
+            document.getElementById('valN').innerText = N;
+
+            let boxW = canvas.width * V_percent;
+            let boxH = canvas.height;
+            
+            // Kasten (Volumen) zeichnen
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(0, 0, boxW, boxH);
+            ctx.strokeStyle = '#94a3b8';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(0, 0, boxW, boxH);
+            
+            // Teilchenanzahl dynamisch anpassen
+            while(particles.length > N) particles.pop();
+            while(particles.length < N) particles.push(new SimParticle(boxW, boxH));
+            
+            // Teilchen-Kollisionen untereinander berechnen
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p1 = particles[i];
+                    let p2 = particles[j];
+                    let dx = p2.x - p1.x;
+                    let dy = p2.y - p1.y;
+                    let distSq = dx * dx + dy * dy;
+                    let minDist = p1.radius + p2.radius;
+                    
+                    if (distSq < minDist * minDist) {
+                        let distance = Math.sqrt(distSq);
+                        if (distance === 0) distance = 0.1;
+                        let overlap = (minDist - distance) / 2;
+                        
+                        let nx = dx / distance;
+                        let ny = dy / distance;
+                        
+                        // Positionen anpassen (Überlappung auflösen)
+                        p1.x -= nx * overlap;
+                        p1.y -= ny * overlap;
+                        p2.x += nx * overlap;
+                        p2.y += ny * overlap;
+                        
+                        // 1D elastischer Stoß entlang der Normalen
+                        let kx = p1.baseVx - p2.baseVx;
+                        let ky = p1.baseVy - p2.baseVy;
+                        let p_impulse = (nx * kx + ny * ky); 
+                        
+                        p1.baseVx -= p_impulse * nx;
+                        p1.baseVy -= p_impulse * ny;
+                        p2.baseVx += p_impulse * nx;
+                        p2.baseVy += p_impulse * ny;
+                        
+                        // Geschwindigkeitsvektoren wieder normalisieren, damit die Temperatur-Skalierung konstant bleibt
+                        let len1 = Math.sqrt(p1.baseVx * p1.baseVx + p1.baseVy * p1.baseVy);
+                        let len2 = Math.sqrt(p2.baseVx * p2.baseVx + p2.baseVy * p2.baseVy);
+                        if(len1 > 0) { p1.baseVx /= len1; p1.baseVy /= len1; }
+                        if(len2 > 0) { p2.baseVx /= len2; p2.baseVy /= len2; }
+                    }
+                }
+            }
+            
+            let totalHits = 0;
+            particles.forEach(p => {
+                // Wenn Volumen schrumpft, Teilchen zurück in die Box zwingen
+                if (p.x > boxW - p.radius) p.x = boxW - p.radius;
+                totalHits += p.update(boxW, boxH, T);
+                p.draw(ctx);
+            });
+            
+            // Theoretische Druckberechnung für saubere Anzeige (p ~ N*T/V)
+            let theoreticalP = (N * T) / (V_percent * 100);
+            let displayP = (theoreticalP / 5).toFixed(1); // Skaliert für realistische bar-Werte
+            document.getElementById('simP').innerText = displayP;
+            
+            requestAnimationFrame(loop);
+        }
+
+        // Init Simulation
+        initSim();
+
+
+        // --- 2. VALIDATION LOGIC ---
+        
+        // Akzeptierte Eingaben (Tolerant gegenüber Synonymen)
+        const VALID_EQUAL = ["=", "konstant", "gleich", "bleibt gleich", "unverändert", "~"];
+        const VALID_UP = ["+", "steigt", "erhöht", "hoch", "nimmt zu", "^", "größer"];
+        const VALID_DOWN = ["-", "sinkt", "fällt", "nimmt ab", "v", "kleiner", "geringer"];
+
+        // UI-Klassen für Feedback
+        const CLASS_DEFAULT = "input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm border-gray-300 cursor-pointer bg-white";
+        const CLASS_SUCCESS = "input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm border-green-500 bg-green-50 text-green-800 cursor-pointer";
+        const CLASS_ERROR = "input-transition w-full p-3 border-2 rounded-lg outline-none text-center text-xl font-bold shadow-sm border-red-500 bg-red-50 text-red-800 cursor-pointer";
+
+        // Hilfsfunktion: Einzelnes Feld prüfen
+        function validateField(id, validArr, hintText) {
+            const el = document.getElementById(id);
+            const hintEl = document.getElementById(id + '-hint');
+            const val = el.value.trim().toLowerCase();
+
+            if (val === "") {
+                el.className = CLASS_DEFAULT;
+                hintEl.innerText = "";
+                return false;
+            }
+
+            if (validArr.includes(val)) {
+                el.className = CLASS_SUCCESS;
+                hintEl.innerHTML = "✓ Richtig";
+                hintEl.className = "text-center min-h-[24px] mt-1 text-xs font-bold text-green-600";
+                return true;
+            } else {
+                el.className = CLASS_ERROR;
+                hintEl.innerHTML = "✗ " + hintText;
+                hintEl.className = "text-center min-h-[24px] mt-1 text-xs font-bold text-red-600";
+                return false;
+            }
+        }
+
+        // Hilfsfunktion: Zahlenwert mit Komma-Toleranz prüfen
+        function validateNumber(id, expected, tolerance) {
+            const el = document.getElementById(id);
+            const hintEl = document.getElementById(id + '-hint');
+            // Ersetzt Komma durch Punkt für JavaScript-Parsing
+            let val = el.value.trim().replace(',', '.'); 
+
+            if (val === "") {
+                el.className = "input-transition w-32 p-3 border-2 rounded-lg outline-none text-center font-bold text-lg shadow-sm border-gray-300";
+                hintEl.innerText = "";
+                return false;
+            }
+
+            const num = parseFloat(val);
+            if (!isNaN(num) && Math.abs(num - expected) <= tolerance) {
+                el.className = "input-transition w-32 p-3 border-2 rounded-lg outline-none text-center font-bold text-lg shadow-sm border-green-500 bg-green-50 text-green-800";
+                hintEl.innerHTML = "✓ Richtig gerechnet!";
+                hintEl.className = "ml-2 text-sm font-bold text-green-600";
+                return true;
+            } else {
+                el.className = "input-transition w-32 p-3 border-2 rounded-lg outline-none text-center font-bold text-lg shadow-sm border-red-500 bg-red-50 text-red-800";
+                hintEl.innerHTML = "✗ Prüfe die Rechnung (Zahl + 0,2).";
+                hintEl.className = "ml-2 text-sm font-bold text-red-600";
+                return false;
+            }
+        }
+
+        // Hilfsfunktion: Freitext nach Schlüsselwörtern untersuchen
+        function checkText(inputId, requirements) {
+            const text = document.getElementById(inputId).value;
+            const errorContainer = document.getElementById(inputId + '-errors');
+            errorContainer.innerHTML = '';
+            let allMet = true;
+
+            if(text.trim().length < 5) {
+                errorContainer.innerHTML = '<p class="text-red-500 text-sm font-bold mt-1">Bitte schreibe eine ausführlichere Erklärung.</p>';
+                document.getElementById(inputId).className = "input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm border-red-500 bg-red-50";
+                return false;
+            }
+
+            requirements.forEach(req => {
+                if (!req.regex.test(text)) {
+                    const err = document.createElement('p');
+                    err.className = "text-red-500 text-sm mt-1 flex items-start gap-1";
+                    err.innerHTML = "<span>💡</span> <span><strong>Tipp:</strong> " + req.hint + "</span>";
+                    errorContainer.appendChild(err);
+                    allMet = false;
+                }
+            });
+
+            const el = document.getElementById(inputId);
+            if (allMet) {
+                el.className = "input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm border-green-500 bg-green-50 text-green-900";
+                errorContainer.innerHTML = '<p class="text-green-600 text-sm font-bold mt-1 flex items-center gap-1"><span>✓</span> Sehr gute Erklärung!</p>';
+            } else {
+                el.className = "input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm border-red-500 bg-red-50";
+            }
+            return allMet;
+        }
+
+        // --- 3. SPEZIFISCHE ANFORDERUNGEN PRO AUFGABE (Angelehnt an handschriftliche Lösung) ---
+
+        const reqA = [
+            { regex: /(temperatur|wärme|heiß|sonne)/i, hint: "Was bewirkt die Sonne zunächst im Inneren?" },
+            { regex: /(schneller|rascher|bewegen)/i, hint: "Erwähne, was mit der Bewegung der Teilchen passiert." },
+            { regex: /(stoßen|prallen|treffen|häufiger|öfter)/i, hint: "Was tun die Teilchen (häufiger) an der Begrenzung?" },
+            { regex: /(?=.*(druck|p))(?=.*(steigt|höher|nimmt zu|platzt|platzen))/i, hint: "Schlussfolgere: Da das Volumen konstant ist, was passiert dadurch letztendlich mit dem Druck?" }
+        ];
+
+        const reqB = [
+            { regex: /(reibung|straße|fahrt)/i, hint: "Warum entsteht überhaupt Energie/Wärme? (Denk an den Kontakt mit der Straße)" },
+            { regex: /(schneller|energie)/i, hint: "Was passiert mit der inneren Energie oder Geschwindigkeit der Teilchen?" },
+            { regex: /(stoßen|wand)/i, hint: "Wie verhalten sich die Teilchen an der Reifenwand?" },
+            { regex: /(?=.*(druck|p))(?=.*(steigt|höher|nimmt zu))/i, hint: "Schlussfolgere: Was bedeutet das für den Gesamtdruck im Reifen?" }
+        ];
+
+        const reqC = [
+            { regex: /(abkühlt|kühler|kälter|sinkt)/i, hint: "Was passiert mit der Temperatur der Marmelade?" },
+            { regex: /(langsamer|weniger.*stöße|schwächere)/i, hint: "Wie ändert sich die Bewegung und das Stoßverhalten der Teilchen?" },
+            { regex: /(unterdruck|(?=.*druck)(?=.*(sinkt|geringer|kleiner|abnimmt)))/i, hint: "Welcher Zustand entsteht dadurch im Glasinneren bezüglich des Drucks?" },
+            { regex: /(außen|luftdruck|deckel|fest)/i, hint: "Warum sitzt der Deckel fest? Berücksichtige den Druck von außen!" }
+        ];
+
+        const reqD = [
+            { regex: /(kalt|winter|niedriger|sinkt)/i, hint: "Was passiert mit der Temperatur im Winter?" },
+            { regex: /(langsamer|träger|weniger.*energie)/i, hint: "Wie verhalten sich die Teilchen bei Kälte?" },
+            { regex: /(seltener|weniger.*stöße|schwächer)/i, hint: "Was bedeutet das für die Stöße gegen die Ballhülle?" },
+            { regex: /(?=.*(druck|p))(?=.*(sinkt|kleiner|geringer|nimmt ab|weich))/i, hint: "Schlussfolgere: Was passiert mit dem Druck, wodurch sich der Ball weich anfühlt?" }
+        ];
+
+        // --- 4. CHECK-FUNKTIONEN DER BUTTONS ---
+
+        function triggerSuccessConfetti() {
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6']
+            });
+        }
+
+        function checkA() {
+            let okN = validateField('N-a', VALID_EQUAL, "Entweichen Teilchen aus dem intakten Reifen? Nein.");
+            let okV = validateField('V-a', VALID_EQUAL, "Ein Reifen dehnt sich (im Gegensatz zu einem Ballon) kaum aus.");
+            let okT = validateField('T-a', VALID_UP, "Die Sonne wärmt den Reifen. Was passiert mit T?");
+            let okP = validateField('p-a', VALID_UP, "Der Reifen droht zu platzen. Was muss mit dem Druck passieren?");
+            let okText = checkText('text-a', reqA);
+            
+            if(okN && okV && okT && okP && okText) triggerSuccessConfetti();
+        }
+
+        function checkB() {
+            let okN = validateField('N-b', VALID_EQUAL, "Die Teilchenanzahl ändert sich nicht.");
+            let okV = validateField('V-b', VALID_EQUAL, "Das Volumen des Reifens ist konstant.");
+            let okT = validateField('T-b', VALID_UP, "Reibung erzeugt Wärme. Was macht T?");
+            let okP = validateField('p-b', VALID_UP, "Der Druck ist nachher höher.");
+            let okText = checkText('text-b', reqB);
+            
+            if(okN && okV && okT && okP && okText) triggerSuccessConfetti();
+        }
+
+        function checkC() {
+            let okN = validateField('N-c', VALID_EQUAL, "Das Glas ist verschlossen. N bleibt gleich.");
+            let okV = validateField('V-c', VALID_EQUAL, "Das Glas ändert seine Größe nicht.");
+            let okT = validateField('T-c', VALID_DOWN, "Die Marmelade kühlt ab. Was macht T?");
+            let okP = validateField('p-c', VALID_DOWN, "Es entsteht ein Unterdruck. Was macht p?");
+            let okText = checkText('text-c', reqC);
+            
+            if(okN && okV && okT && okP && okText) triggerSuccessConfetti();
+        }
+
+        function checkD() {
+            let okN = validateField('N-d', VALID_EQUAL, "Die Luft bleibt im Ball eingesperrt.");
+            let okV = validateField('V-d', VALID_EQUAL, "Wir nehmen an, das Volumen ändert sich kaum.");
+            let okT = validateField('T-d', VALID_DOWN, "Im Winter ist es kalt. Was macht T?");
+            let okP = validateField('p-d', VALID_DOWN, "Der Ball wird weich. Was macht p?");
+            let okText = checkText('text-d', reqD);
+            
+            if(okN && okV && okT && okP && okText) triggerSuccessConfetti();
+        }
+
+    </script>
+</body>
+</html>
