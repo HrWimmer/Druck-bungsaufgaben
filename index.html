@@ -140,6 +140,10 @@
                 <h4 class="font-bold mb-2 text-slate-700">2. Begründung im Teilchenmodell:</h4>
                 <textarea id="text-a" rows="3" class="input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-slate-700" placeholder="Durch die Temperaturerhöhung..."></textarea>
                 <div id="text-a-errors" class="flex flex-col gap-1 mt-2"></div>
+                <div id="text-a-solution-container" class="mt-3 hidden">
+                    <button id="text-a-btn" onclick="showSolution('text-a')" class="text-sm text-slate-500 hover:text-blue-600 underline font-bold transition-colors cursor-pointer">💡 Musterlösung anzeigen</button>
+                    <div id="text-a-solution" class="hidden p-4 bg-blue-50 border border-blue-200 rounded-lg text-blue-900 text-sm font-medium mt-2"></div>
+                </div>
             </div>
 
             <button onclick="checkA()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform active:scale-95 shadow-md flex items-center gap-2">
@@ -191,6 +195,10 @@
                 <h4 class="font-bold mb-2 text-slate-700">2. Begründung im Teilchenmodell:</h4>
                 <textarea id="text-b" rows="3" class="input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 text-slate-700" placeholder="Durch die Reibung der Reifen auf der Straße..."></textarea>
                 <div id="text-b-errors" class="flex flex-col gap-1 mt-2"></div>
+                <div id="text-b-solution-container" class="mt-3 hidden">
+                    <button id="text-b-btn" onclick="showSolution('text-b')" class="text-sm text-slate-500 hover:text-emerald-600 underline font-bold transition-colors cursor-pointer">💡 Musterlösung anzeigen</button>
+                    <div id="text-b-solution" class="hidden p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-900 text-sm font-medium mt-2"></div>
+                </div>
             </div>
 
             <button onclick="checkB()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform active:scale-95 shadow-md flex items-center gap-2">
@@ -242,6 +250,10 @@
                 <h4 class="font-bold mb-2 text-slate-700">2. Begründung im Teilchenmodell:</h4>
                 <textarea id="text-c" rows="3" class="input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-200 text-slate-700" placeholder="Wenn die Marmelade abkühlt..."></textarea>
                 <div id="text-c-errors" class="flex flex-col gap-1 mt-2"></div>
+                <div id="text-c-solution-container" class="mt-3 hidden">
+                    <button id="text-c-btn" onclick="showSolution('text-c')" class="text-sm text-slate-500 hover:text-amber-600 underline font-bold transition-colors cursor-pointer">💡 Musterlösung anzeigen</button>
+                    <div id="text-c-solution" class="hidden p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-900 text-sm font-medium mt-2"></div>
+                </div>
             </div>
 
             <button onclick="checkC()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-lg transition-all transform active:scale-95 shadow-md flex items-center gap-2">
@@ -294,12 +306,122 @@
                 <h4 class="font-bold mb-2 text-slate-700">2. Begründung im Teilchenmodell:</h4>
                 <textarea id="text-d" rows="3" class="input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 text-slate-700" placeholder="Im Winter ist die Temperatur niedriger, dadurch..."></textarea>
                 <div id="text-d-errors" class="flex flex-col gap-1 mt-2"></div>
+                <div id="text-d-solution-container" class="mt-3 hidden">
+                    <button id="text-d-btn" onclick="showSolution('text-d')" class="text-sm text-slate-500 hover:text-purple-600 underline font-bold transition-colors cursor-pointer">💡 Musterlösung anzeigen</button>
+                    <div id="text-d-solution" class="hidden p-4 bg-purple-50 border border-purple-200 rounded-lg text-purple-900 text-sm font-medium mt-2"></div>
+                </div>
             </div>
 
             <button onclick="checkD()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform active:scale-95 shadow-md flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
                 Antwort prüfen
             </button>
+        </section>
+
+        <!-- Endlos-Trainer Section -->
+        <section class="bg-white p-6 md:p-8 rounded-2xl shadow-md border-t-4 border-pink-500 mb-8 relative overflow-hidden group">
+            <h3 class="text-xl font-bold mb-2 text-slate-800 flex items-center gap-2">
+                <span>🎮</span> Endlos-Trainer: Zustandsgrößen-Quiz
+            </h3>
+            <p class="text-lg mb-6 text-slate-700 font-medium">Zwei Größen bleiben konstant, eine ändert sich. Was passiert mit der gesuchten Größe? Sammle Punkte!</p>
+            
+            <div class="flex flex-col md:flex-row gap-4 items-stretch justify-center p-6 bg-slate-50 rounded-xl border border-slate-200">
+                <!-- Known Variables -->
+                <div class="text-center p-4 bg-white shadow-sm rounded-lg border-2 border-slate-200 w-full md:w-1/4">
+                    <div class="text-slate-500 text-sm font-bold mb-1" id="endless-l1">Variable 1</div>
+                    <div class="text-xl font-bold text-slate-800" id="endless-v1">-</div>
+                </div>
+                <div class="text-center p-4 bg-white shadow-sm rounded-lg border-2 border-slate-200 w-full md:w-1/4">
+                    <div class="text-slate-500 text-sm font-bold mb-1" id="endless-l2">Variable 2</div>
+                    <div class="text-xl font-bold text-slate-800" id="endless-v2">-</div>
+                </div>
+                <div class="text-center p-4 bg-white shadow-sm rounded-lg border-2 border-slate-200 w-full md:w-1/4">
+                    <div class="text-slate-500 text-sm font-bold mb-1" id="endless-l3">Variable 3</div>
+                    <div class="text-xl font-bold text-slate-800" id="endless-v3">-</div>
+                </div>
+                
+                <!-- Target Variable -->
+                <div class="text-center p-4 bg-pink-50 shadow-sm rounded-lg border-2 border-pink-400 w-full md:w-1/4 relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">Gesucht</div>
+                    <div class="text-pink-700 text-sm font-bold mb-2 mt-1" id="endless-ltarget">Zielvariable</div>
+                    <select id="endless-select" class="w-full p-2 border-2 border-pink-300 rounded-lg outline-none text-center font-bold text-pink-900 bg-white cursor-pointer focus:ring-2 focus:ring-pink-200">
+                        <option value="" disabled selected>?</option>
+                        <option value="+">steigt</option>
+                        <option value="-">sinkt</option>
+                        <option value="=">konstant</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Score and Controls -->
+            <div class="flex flex-col sm:flex-row justify-between items-center mt-6 gap-4">
+                <div class="text-lg font-bold text-slate-700 bg-slate-100 px-4 py-2 rounded-lg border border-slate-200">
+                    Punkte: <span id="endless-score" class="text-pink-600 text-2xl ml-1">0</span> 
+                    <span id="endless-streak" class="text-sm text-slate-500 ml-2 font-normal hidden">🔥 Streak: <span id="streak-val">0</span></span>
+                </div>
+                
+                <div class="w-full sm:w-auto flex flex-col gap-2">
+                    <button id="btn-endless-check" onclick="checkEndless()" class="w-full sm:w-auto bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-8 rounded-lg transition-all shadow-md">
+                        Antwort prüfen
+                    </button>
+                    <button id="btn-endless-next" onclick="nextEndless()" class="w-full sm:w-auto bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-8 rounded-lg transition-all hidden">
+                        Nächste Frage ➔
+                    </button>
+                </div>
+            </div>
+            <div id="endless-feedback" class="mt-4 text-center font-bold text-lg min-h-[28px]"></div>
+        </section>
+
+        <!-- Buchaufgabe Section -->
+        <section class="bg-white p-6 md:p-8 rounded-2xl shadow-md border-t-4 border-slate-700 mb-8 relative overflow-hidden group">
+            <div class="absolute top-0 right-0 bg-slate-700 text-white text-xs font-bold px-4 py-1 rounded-bl-lg">Heftaufgabe</div>
+            <h3 class="text-xl font-bold mb-2 text-slate-800">Transferaufgabe: Kolbengefäß</h3>
+            <p class="text-lg mb-6 text-slate-700 font-medium">Bearbeite diese Aufgabe schriftlich in deinem Heft.</p>
+            
+            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6">
+                <p class="mb-4 text-slate-800 leading-relaxed">Ein Gefäß mit dem Volumen <i>V</i> ist durch einen frei beweglichen Kolben in die beiden Teilvolumen <i>V<sub>1</sub></i> und <i>V<sub>2</sub></i> getrennt. Der Druck <i>p<sub>1</sub></i> im Volumen <i>V<sub>1</sub></i> ist wesentlich größer als der Druck <i>p<sub>2</sub></i> im Volumen <i>V<sub>2</sub></i>.</p>
+                
+                <!-- CSS Nachbau des Bildes -->
+                <div class="w-full max-w-lg mx-auto h-32 border-4 border-slate-600 flex relative rounded-sm shadow-inner mb-6 bg-white">
+                    <!-- Linke Seite (Hoher Druck / Hohe Teilchendichte) -->
+                    <div class="w-1/2 h-full relative overflow-hidden border-r-8 border-slate-800 bg-blue-50">
+                        <div class="absolute inset-0 opacity-60" style="background-image: radial-gradient(#0ea5e9 2.5px, transparent 2.5px); background-size: 10px 10px; background-position: 0 0, 5px 5px;"></div>
+                        <div class="absolute bottom-1 left-2 font-bold text-slate-800 bg-white/70 px-1 rounded"><i>V<sub>1</sub></i></div>
+                    </div>
+                    <!-- Rechte Seite (Niedriger Druck / Geringe Teilchendichte) -->
+                    <div class="w-1/2 h-full relative overflow-hidden bg-blue-50/50">
+                        <div class="absolute inset-0 opacity-40" style="background-image: radial-gradient(#0ea5e9 2.5px, transparent 2.5px); background-size: 24px 24px;"></div>
+                        <div class="absolute bottom-1 left-2 font-bold text-slate-800 bg-white/70 px-1 rounded"><i>V<sub>2</sub></i></div>
+                    </div>
+                </div>
+
+                <p class="font-bold text-blue-900 border-l-4 border-blue-500 pl-3">a) Beschreibe und begründe mithilfe des Teilchenmodells, wie sich der Kolben verhalten wird.</p>
+            </div>
+
+            <!-- Hilfen-System -->
+            <div class="mb-6">
+                <h4 class="font-bold mb-3 text-slate-700">Kommst du nicht weiter? Lass dir Tipps geben:</h4>
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <button onclick="showBookHint(1)" class="bg-amber-100 hover:bg-amber-200 text-amber-800 border border-amber-300 font-bold py-2 px-4 rounded transition-colors text-sm">Tipp 1</button>
+                    <button onclick="showBookHint(2)" class="bg-amber-100 hover:bg-amber-200 text-amber-800 border border-amber-300 font-bold py-2 px-4 rounded transition-colors text-sm">Tipp 2</button>
+                    <button onclick="showBookHint(3)" class="bg-amber-100 hover:bg-amber-200 text-amber-800 border border-amber-300 font-bold py-2 px-4 rounded transition-colors text-sm">Tipp 3</button>
+                </div>
+                <div id="book-hint-display" class="hidden p-4 bg-amber-50 border-l-4 border-amber-400 text-amber-900 rounded-r-lg italic text-sm"></div>
+            </div>
+
+            <hr class="my-6 border-slate-200">
+
+            <div class="text-center">
+                <p class="text-sm text-slate-500 mb-3">Fertig ins Heft geschrieben? Vergleiche deine Antwort mit der Musterlösung.</p>
+                <button onclick="toggleBookSolution()" class="bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-6 rounded-lg transition-all shadow-md">
+                    Musterlösung einblenden
+                </button>
+                <div id="book-solution" class="hidden mt-4 text-left p-5 bg-green-50 border border-green-200 rounded-xl text-green-900 leading-relaxed text-sm md:text-base">
+                    <strong>Musterlösung:</strong> Da der Druck in $V_1$ höher ist, ist dort die Teilchendichte größer (es sind mehr Teilchen pro Raumvolumen vorhanden). Dadurch stoßen von links viel mehr Teilchen gegen den beweglichen Kolben als von rechts. Die daraus resultierende Kraft von links ist größer als die von rechts. 
+                    <br><br>
+                    <strong>Folge:</strong> Der Kolben wird nach rechts gedrückt. Dadurch wird $V_1$ größer (Druck sinkt) und $V_2$ kleiner (Druck steigt). Der Kolben bewegt sich so lange, bis die Anzahl der Stöße auf beiden Seiten gleich ist – also bis der Druck $p_1$ und $p_2$ exakt gleich groß ist.
+                </div>
+            </div>
         </section>
 
     </main>
@@ -500,30 +622,23 @@
             }
         }
 
-        // Hilfsfunktion: Zahlenwert mit Komma-Toleranz prüfen
-        function validateNumber(id, expected, tolerance) {
-            const el = document.getElementById(id);
-            const hintEl = document.getElementById(id + '-hint');
-            // Ersetzt Komma durch Punkt für JavaScript-Parsing
-            let val = el.value.trim().replace(',', '.'); 
+        // --- Logik für Musterlösung ---
+        let textAttempts = {};
 
-            if (val === "") {
-                el.className = "input-transition w-32 p-3 border-2 rounded-lg outline-none text-center font-bold text-lg shadow-sm border-gray-300";
-                hintEl.innerText = "";
-                return false;
-            }
+        const solutions = {
+            'text-a': "Musterlösung: Durch die Sonneneinstrahlung erhöht sich die Temperatur. Die Gasteilchen bewegen sich schneller und stoßen häufiger und heftiger gegen die Reifenwand. Da das Volumen konstant bleibt, steigt der Druck, bis der Reifen eventuell platzt.",
+            'text-b': "Musterlösung: Durch die Reibung auf der Straße erwärmen sich die Reifen. Die Teilchen bewegen sich schneller (höhere Energie) und stoßen häufiger gegen die Wände. Bei konstantem Volumen führt dies zu einem höheren Druck.",
+            'text-c': "Musterlösung: Beim Abkühlen der Marmelade sinkt die Temperatur. Die Gasteilchen bewegen sich langsamer und stoßen seltener und schwächer gegen die Wände. Dadurch sinkt der Druck im Inneren (Unterdruck entsteht). Der höhere äußere Luftdruck drückt den Deckel fest auf das Glas.",
+            'text-d': "Musterlösung: Im Winter ist es kälter (Temperatur sinkt). Die Teilchen bewegen sich langsamer, haben weniger Energie und stoßen seltener gegen die Ballhülle. Da das Volumen ungefähr gleich bleibt, sinkt der Druck und der Ball fühlt sich weich an."
+        };
 
-            const num = parseFloat(val);
-            if (!isNaN(num) && Math.abs(num - expected) <= tolerance) {
-                el.className = "input-transition w-32 p-3 border-2 rounded-lg outline-none text-center font-bold text-lg shadow-sm border-green-500 bg-green-50 text-green-800";
-                hintEl.innerHTML = "✓ Richtig gerechnet!";
-                hintEl.className = "ml-2 text-sm font-bold text-green-600";
-                return true;
-            } else {
-                el.className = "input-transition w-32 p-3 border-2 rounded-lg outline-none text-center font-bold text-lg shadow-sm border-red-500 bg-red-50 text-red-800";
-                hintEl.innerHTML = "✗ Prüfe die Rechnung (Zahl + 0,2).";
-                hintEl.className = "ml-2 text-sm font-bold text-red-600";
-                return false;
+        function showSolution(inputId) {
+            const solDiv = document.getElementById(inputId + '-solution');
+            const btn = document.getElementById(inputId + '-btn');
+            if(solDiv && btn) {
+                solDiv.innerHTML = solutions[inputId];
+                solDiv.classList.remove('hidden');
+                btn.classList.add('hidden');
             }
         }
 
@@ -550,12 +665,22 @@
                 }
             });
 
+            // Versuchszähler für Musterlösung hochsetzen
+            textAttempts[inputId] = (textAttempts[inputId] || 0) + 1;
+            const solContainer = document.getElementById(inputId + '-solution-container');
+
             const el = document.getElementById(inputId);
             if (allMet) {
                 el.className = "input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm border-green-500 bg-green-50 text-green-900";
                 errorContainer.innerHTML = '<p class="text-green-600 text-sm font-bold mt-1 flex items-center gap-1"><span>✓</span> Sehr gute Erklärung!</p>';
+                if(solContainer) solContainer.classList.add('hidden'); // Lösung verstecken, wenn richtig gelöst
             } else {
                 el.className = "input-transition w-full p-4 border-2 rounded-xl outline-none shadow-sm border-red-500 bg-red-50";
+                
+                // Lösung anzeigen, wenn mind. 2 Versuche und Text lang genug (> 20 Zeichen)
+                if(textAttempts[inputId] >= 2 && text.trim().length > 20 && solContainer) {
+                    solContainer.classList.remove('hidden');
+                }
             }
             return allMet;
         }
@@ -563,31 +688,31 @@
         // --- 3. SPEZIFISCHE ANFORDERUNGEN PRO AUFGABE (Angelehnt an handschriftliche Lösung) ---
 
         const reqA = [
-            { regex: /(temperatur|wärme|heiß|sonne)/i, hint: "Was bewirkt die Sonne zunächst im Inneren?" },
-            { regex: /(schneller|rascher|bewegen)/i, hint: "Erwähne, was mit der Bewegung der Teilchen passiert." },
+            { regex: /(temperatur|wärme|heiß|sonne|erwärmt)/i, hint: "Was bewirkt die Sonne zunächst im Inneren?" },
+            { regex: /(schneller|rascher|bewegen|heftiger)/i, hint: "Erwähne, was mit der Bewegung der Teilchen passiert." },
             { regex: /(stoßen|prallen|treffen|häufiger|öfter)/i, hint: "Was tun die Teilchen (häufiger) an der Begrenzung?" },
-            { regex: /(?=.*(druck|p))(?=.*(steigt|höher|nimmt zu|platzt|platzen))/i, hint: "Schlussfolgere: Da das Volumen konstant ist, was passiert dadurch letztendlich mit dem Druck?" }
+            { regex: /(?=.*(druck|p))(?=.*(steigt|höher|nimmt zu|platzt|platzen|größer))/i, hint: "Schlussfolgere: Da das Volumen konstant ist, was passiert dadurch letztendlich mit dem Druck?" }
         ];
 
         const reqB = [
-            { regex: /(reibung|straße|fahrt)/i, hint: "Warum entsteht überhaupt Energie/Wärme? (Denk an den Kontakt mit der Straße)" },
-            { regex: /(schneller|energie)/i, hint: "Was passiert mit der inneren Energie oder Geschwindigkeit der Teilchen?" },
-            { regex: /(stoßen|wand)/i, hint: "Wie verhalten sich die Teilchen an der Reifenwand?" },
-            { regex: /(?=.*(druck|p))(?=.*(steigt|höher|nimmt zu))/i, hint: "Schlussfolgere: Was bedeutet das für den Gesamtdruck im Reifen?" }
+            { regex: /(reibung|straße|fahrt|erwärmt)/i, hint: "Warum entsteht überhaupt Energie/Wärme? (Denk an den Kontakt mit der Straße)" },
+            { regex: /(schneller|energie|heftiger)/i, hint: "Was passiert mit der inneren Energie oder Geschwindigkeit der Teilchen?" },
+            { regex: /(stoßen|wand|häufiger)/i, hint: "Wie verhalten sich die Teilchen an der Reifenwand?" },
+            { regex: /(?=.*(druck|p))(?=.*(steigt|höher|nimmt zu|größer|erhöht))/i, hint: "Schlussfolgere: Was bedeutet das für den Gesamtdruck im Reifen?" }
         ];
 
         const reqC = [
             { regex: /(abkühlt|kühler|kälter|sinkt)/i, hint: "Was passiert mit der Temperatur der Marmelade?" },
-            { regex: /(langsamer|weniger.*stöße|schwächere)/i, hint: "Wie ändert sich die Bewegung und das Stoßverhalten der Teilchen?" },
-            { regex: /(unterdruck|(?=.*druck)(?=.*(sinkt|geringer|kleiner|abnimmt)))/i, hint: "Welcher Zustand entsteht dadurch im Glasinneren bezüglich des Drucks?" },
+            { regex: /(langsamer|weniger.*stöße|schwächere|seltener)/i, hint: "Wie ändert sich die Bewegung und das Stoßverhalten der Teilchen?" },
+            { regex: /(unterdruck|(?=.*druck)(?=.*(sinkt|geringer|kleiner|abnimmt|fällt|niedriger)))/i, hint: "Welcher Zustand entsteht dadurch im Glasinneren bezüglich des Drucks?" },
             { regex: /(außen|luftdruck|deckel|fest)/i, hint: "Warum sitzt der Deckel fest? Berücksichtige den Druck von außen!" }
         ];
 
         const reqD = [
             { regex: /(kalt|winter|niedriger|sinkt)/i, hint: "Was passiert mit der Temperatur im Winter?" },
-            { regex: /(langsamer|träger|weniger.*energie)/i, hint: "Wie verhalten sich die Teilchen bei Kälte?" },
+            { regex: /(langsamer|träger|weniger.*energie|seltener)/i, hint: "Wie verhalten sich die Teilchen bei Kälte?" },
             { regex: /(seltener|weniger.*stöße|schwächer)/i, hint: "Was bedeutet das für die Stöße gegen die Ballhülle?" },
-            { regex: /(?=.*(druck|p))(?=.*(sinkt|kleiner|geringer|nimmt ab|weich))/i, hint: "Schlussfolgere: Was passiert mit dem Druck, wodurch sich der Ball weich anfühlt?" }
+            { regex: /(?=.*(druck|p))(?=.*(sinkt|kleiner|geringer|nimmt ab|weich|fällt|niedriger))/i, hint: "Schlussfolgere: Was passiert mit dem Druck, wodurch sich der Ball weich anfühlt?" }
         ];
 
         // --- 4. CHECK-FUNKTIONEN DER BUTTONS ---
@@ -639,6 +764,150 @@
             let okText = checkText('text-d', reqD);
             
             if(okN && okV && okT && okP && okText) triggerSuccessConfetti();
+        }
+
+        // --- 5. ENDLOS-TRAINER LOGIK ---
+        
+        const varNames = {
+            'N': 'Teilchen (<i>N</i>)',
+            'V': 'Volumen (<i>V</i>)',
+            'T': 'Temperatur (<i>T</i>)',
+            'p': 'Druck (<i>p</i>)'
+        };
+        const valText = { '+': 'steigt 📈', '-': 'sinkt 📉', '=': 'konstant ➖' };
+        
+        // Regel: p * V ~ N * T
+        // Um ein klares Ergebnis zu haben, ändern wir immer nur EINE Größe, 2 bleiben konstant, die 4. ist gesucht.
+        const scenarios = [
+            // Suche p
+            { k: ['N', 'V', 'T'], v: ['=', '=', '+'], t: 'p', a: '+' },
+            { k: ['N', 'V', 'T'], v: ['=', '=', '-'], t: 'p', a: '-' },
+            { k: ['N', 'V', 'T'], v: ['+', '=', '='], t: 'p', a: '+' },
+            { k: ['N', 'V', 'T'], v: ['-', '=', '='], t: 'p', a: '-' },
+            { k: ['N', 'V', 'T'], v: ['=', '+', '='], t: 'p', a: '-' },
+            { k: ['N', 'V', 'T'], v: ['=', '-', '='], t: 'p', a: '+' },
+            // Suche V
+            { k: ['N', 'p', 'T'], v: ['=', '=', '+'], t: 'V', a: '+' },
+            { k: ['N', 'p', 'T'], v: ['=', '=', '-'], t: 'V', a: '-' },
+            { k: ['N', 'p', 'T'], v: ['+', '=', '='], t: 'V', a: '+' },
+            { k: ['N', 'p', 'T'], v: ['-', '=', '='], t: 'V', a: '-' },
+            // Suche T
+            { k: ['N', 'p', 'V'], v: ['=', '=', '+'], t: 'T', a: '+' },
+            { k: ['N', 'p', 'V'], v: ['=', '=', '-'], t: 'T', a: '-' },
+            { k: ['N', 'p', 'V'], v: ['=', '+', '='], t: 'T', a: '+' },
+            { k: ['N', 'p', 'V'], v: ['=', '-', '='], t: 'T', a: '-' },
+            // Suche N
+            { k: ['V', 'p', 'T'], v: ['=', '=', '+'], t: 'N', a: '-' },
+            { k: ['V', 'p', 'T'], v: ['=', '=', '-'], t: 'N', a: '+' },
+            { k: ['V', 'p', 'T'], v: ['+', '=', '='], t: 'N', a: '+' },
+            { k: ['V', 'p', 'T'], v: ['-', '=', '='], t: 'N', a: '-' },
+            { k: ['V', 'p', 'T'], v: ['=', '+', '='], t: 'N', a: '+' },
+            { k: ['V', 'p', 'T'], v: ['=', '-', '='], t: 'N', a: '-' }
+        ];
+
+        let currentScenario = null;
+        let endlessScore = 0;
+        let endlessStreak = 0;
+
+        function loadEndlessScenario() {
+            // Zufälliges Szenario auswählen
+            const idx = Math.floor(Math.random() * scenarios.length);
+            currentScenario = scenarios[idx];
+            
+            // UI Updaten
+            document.getElementById('endless-l1').innerHTML = varNames[currentScenario.k[0]];
+            document.getElementById('endless-v1').innerHTML = valText[currentScenario.v[0]];
+            
+            document.getElementById('endless-l2').innerHTML = varNames[currentScenario.k[1]];
+            document.getElementById('endless-v2').innerHTML = valText[currentScenario.v[1]];
+            
+            document.getElementById('endless-l3').innerHTML = varNames[currentScenario.k[2]];
+            document.getElementById('endless-v3').innerHTML = valText[currentScenario.v[2]];
+            
+            document.getElementById('endless-ltarget').innerHTML = varNames[currentScenario.t];
+            
+            // Reset Dropdown
+            const select = document.getElementById('endless-select');
+            select.value = "";
+            select.className = "w-full p-2 border-2 border-pink-300 rounded-lg outline-none text-center font-bold text-pink-900 bg-white cursor-pointer focus:ring-2 focus:ring-pink-200";
+            
+            // Reset UI States
+            document.getElementById('endless-feedback').innerText = "";
+            document.getElementById('btn-endless-check').classList.remove('hidden');
+            document.getElementById('btn-endless-next').classList.add('hidden');
+        }
+
+        function checkEndless() {
+            const select = document.getElementById('endless-select');
+            const feedback = document.getElementById('endless-feedback');
+            
+            if(!select.value) {
+                feedback.innerText = "Bitte wähle eine Antwort aus!";
+                feedback.className = "mt-4 text-center font-bold text-lg text-slate-500";
+                return;
+            }
+
+            document.getElementById('btn-endless-check').classList.add('hidden');
+            document.getElementById('btn-endless-next').classList.remove('hidden');
+
+            if(select.value === currentScenario.a) {
+                endlessScore += 10;
+                endlessStreak += 1;
+                document.getElementById('endless-score').innerText = endlessScore;
+                
+                if(endlessStreak > 1) {
+                    document.getElementById('endless-streak').classList.remove('hidden');
+                    document.getElementById('streak-val').innerText = endlessStreak;
+                }
+
+                select.className = "w-full p-2 border-2 border-green-500 rounded-lg outline-none text-center font-bold text-green-800 bg-green-50";
+                feedback.innerText = "✓ Richtig! Gut kombiniert.";
+                feedback.className = "mt-4 text-center font-bold text-lg text-green-600";
+                
+                // Kleines Extra-Confetti bei 5er Streaks
+                if(endlessStreak % 5 === 0) {
+                    confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 }, colors: ['#ec4899'] });
+                }
+            } else {
+                endlessStreak = 0;
+                document.getElementById('endless-streak').classList.add('hidden');
+                
+                select.className = "w-full p-2 border-2 border-red-500 rounded-lg outline-none text-center font-bold text-red-800 bg-red-50";
+                feedback.innerHTML = "✗ Leider falsch. Richtig wäre: <strong>" + valText[currentScenario.a] + "</strong>";
+                feedback.className = "mt-4 text-center font-bold text-lg text-red-600";
+            }
+        }
+
+        function nextEndless() {
+            loadEndlessScenario();
+        }
+
+        // Start Endless Trainer on load
+        loadEndlessScenario();
+
+
+        // --- 6. BUCHAUFGABE LOGIK ---
+
+        const bookHints = [
+            "Tipp 1: Erinnere dich an die Definition von Druck im Teilchenmodell. Auf der linken Seite (V1) herrscht ein höherer Druck. Was bedeutet das für die Anzahl der Teilchen bzw. Stöße an der Wand (Kolben)?",
+            "Tipp 2: Da links mehr Teilchen gegen den Kolben prallen, entsteht dort eine größere Kraft. Was passiert, wenn von links stärker gedrückt wird als von rechts?",
+            "Tipp 3: Der Kolben bewegt sich nach rechts. Überlege: Dadurch wird V1 größer (Druck sinkt) und V2 kleiner (Druck steigt). Wann genau hört der Kolben auf, sich zu bewegen?"
+        ];
+
+        function showBookHint(num) {
+            const display = document.getElementById('book-hint-display');
+            display.classList.remove('hidden');
+            display.innerText = bookHints[num - 1];
+        }
+
+        function toggleBookSolution() {
+            const sol = document.getElementById('book-solution');
+            if(sol.classList.contains('hidden')) {
+                sol.classList.remove('hidden');
+                MathJax.typesetPromise([sol]); // Formeln in der Lösung neu rendern
+            } else {
+                sol.classList.add('hidden');
+            }
         }
 
     </script>
